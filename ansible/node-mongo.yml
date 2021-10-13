@@ -1,0 +1,6 @@
+
+- 
+  name: install node mongo app
+  hosts: localhost
+  roles: 
+    - node_mongo

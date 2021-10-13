@@ -1,0 +1,30 @@
+---
+- name: copying zip file to new location
+  copy: 
+    src: "/home/anand/Documents/code/node_mongo/node_app.tar.xz"
+    dest: "{{ app_home_dir }}"
+ 
+- name: Extracting node-app tar file
+  unarchive:
+    src: "{{ app_home_dir }}/node_app.tar.xz"
+    dest: "{{ app_home_dir }}" 
+
+# - name: Install pm2
+#   npm: 
+#     name: pm2 
+#     global: no 
+#     production: yes
+#     path: "{{ app_home_dir }}"
+#     state: present
+
+- name: Update npm
+  npm:
+    path: "{{ app_home_dir }}"
+    state: present
+
+- name: delete existing pm2 processes if running
+  command: "node {{ app_home_dir }}/node_modules/pm2/bin/pm2 delete node-app"
+  ignore_errors: True
+
+- name: Start pm2
+  command: "node {{ app_home_dir }}/node_modules/pm2/bin/pm2 start {{ app_home_dir }}/app/server.js --name node-app"
