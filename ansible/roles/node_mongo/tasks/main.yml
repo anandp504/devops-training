@@ -9,13 +9,13 @@
     src: "{{ app_home_dir }}/node_app.tar.xz"
     dest: "{{ app_home_dir }}" 
 
-# - name: Install pm2
-#   npm: 
-#     name: pm2 
-#     global: no 
-#     production: yes
-#     path: "{{ app_home_dir }}"
-#     state: present
+- name: Install pm2
+  npm: 
+    name: pm2 
+    global: no 
+    production: yes
+    path: "{{ app_home_dir }}"
+    state: present
 
 - name: Update npm
   npm:
